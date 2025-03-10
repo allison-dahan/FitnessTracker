@@ -45,7 +45,7 @@ namespace FitnessTracker.Controllers
         [HttpGet]
         public IActionResult LogMeal()
         {
-            var meal = new MealModel
+            var meal = new Meal
             {
                 Date = DateTime.Now.Date
             };
@@ -58,7 +58,7 @@ namespace FitnessTracker.Controllers
         // Process the submitted meal log form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LogMeal(MealModel meal)
+        public IActionResult LogMeal(Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace FitnessTracker.Controllers
         // Process the submitted meal edit form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditMeal(MealModel meal)
+        public IActionResult EditMeal(Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace FitnessTracker.Controllers
         // Log water intake
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LogWater(WaterIntakeModel waterIntake)
+        public IActionResult LogWater(WaterIntake waterIntake)
         {
             if (ModelState.IsValid)
             {
@@ -150,10 +150,11 @@ namespace FitnessTracker.Controllers
         {
             if (amount > 0 && amount <= 2.0m)
             {
-                var waterIntake = new WaterIntakeModel
+                var waterIntake = new WaterIntake
                 {
                     Date = DateTime.Now.Date,
-                    Amount = amount
+                    Amount = amount,
+                    UserId = 1
                 };
                 
                 _nutritionRepository.AddWaterIntake(waterIntake);
@@ -182,7 +183,7 @@ namespace FitnessTracker.Controllers
     public class NutritionViewModel
     {
         public NutritionSummaryModel Summary { get; set; }
-        public IEnumerable<MealModel> Meals { get; set; }
+        public IEnumerable<Meal> Meals { get; set; }
         public DateTime SelectedDate { get; set; } = DateTime.Now.Date;
         public WaterIntakeModel NewWaterIntake { get; set; } = new WaterIntakeModel();
     }

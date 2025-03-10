@@ -51,7 +51,7 @@
             
             <h5 class="text-muted mb-3">Exercises</h5>
             
-            @if (workout.Exercises != null && workout.Exercises.Any())
+            @if (workout.WorkoutExercises != null && workout.WorkoutExercises.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(var exercise in workout.Exercises)
+                            @foreach(var exercise in workout.WorkoutExercises)
                             {
                                 <tr>
                                     <td>@exercise.Exercise.Name</td>

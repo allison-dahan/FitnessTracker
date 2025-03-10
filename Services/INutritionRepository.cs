@@ -3,15 +3,15 @@ using FitnessTracker.Models;
 
 public interface INutritionRepository
 {
-    IEnumerable<MealModel> GetAllMeals();
-    IEnumerable<MealModel> GetMealsByDate(DateTime date);
-    IEnumerable<MealModel> GetTodaysMeals();
+    IEnumerable<Meal> GetAllMeals();
+    IEnumerable<Meal> GetMealsByDate(DateTime date);
+    IEnumerable<Meal> GetTodaysMeals();
     NutritionSummaryModel GetTodaysSummary();
     NutritionSummaryModel GetSummaryByDate(DateTime date);
-    void AddMeal(MealModel meal);
-    void UpdateMeal(MealModel meal);
+    void AddMeal(Meal meal);
+    void UpdateMeal(Meal meal);
     void DeleteMeal(int id);
-    void AddWaterIntake(WaterIntakeModel waterIntake);
+    void AddWaterIntake(WaterIntake waterIntake);
     decimal GetTodaysWaterIntake();
 
 

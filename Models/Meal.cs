@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitnessTracker.Models
 {
-    public class MealModel
+    public class Meal
     {
         public int Id { get; set; }
+        
+        public int UserId { get; set; }
+        
+        [ForeignKey("UserId")]
+        public User User { get; set; }
         
         [Required]
         [Display(Name = "Date")]
@@ -19,7 +24,7 @@ namespace FitnessTracker.Models
         
         [Required]
         [Range(0, 5000, ErrorMessage = "Calories must be between 0 and 5000")]
-        public int Calories { get; set; }
+        public int TotalCalories { get; set; }
         
         [Range(0, 500, ErrorMessage = "Protein must be between 0 and 500g")]
         [Display(Name = "Protein (g)")]
@@ -35,6 +40,8 @@ namespace FitnessTracker.Models
         
         [MaxLength(500)]
         public string Notes { get; set; }
+        
+        // Navigation property
+        public ICollection<MealFood> MealFoods { get; set; } = new List<MealFood>();
     }
-
 }

@@ -1,4 +1,4 @@
-@model FitnessTracker.Models.MealModel
+@model FitnessTracker.Models.Meal
 
 <div class="container py-4">
     <h1 class="mb-4">Log Meal</h1>
@@ -38,11 +38,11 @@
                             <span asp-validation-for="MealType" class="text-danger"></span>
                         </div>
                         
-                        <div class="mb-3">
+                        @* <div class="mb-3">
                             <label asp-for="Calories" class="form-label"></label>
                             <input asp-for="Calories" class="form-control" />
                             <span asp-validation-for="Calories" class="text-danger"></span>
-                        </div>
+                        </div> *@
                         
                         <div class="row">
                             <div class="col-md-4 mb-3">

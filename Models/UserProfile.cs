@@ -1,22 +1,18 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitnessTracker.Models
 {
     public class UserProfile
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "First name is required")]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Last name is required")]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email format")]
-        public string Email { get; set; }
+        
+        [Required]
+        public int UserId { get; set; }
+        
+        [ForeignKey("UserId")]
+        public User User { get; set; }
 
         [Range(13, 100, ErrorMessage = "Age must be between 13 and 100")]
         public int Age { get; set; }
@@ -37,5 +33,10 @@ namespace FitnessTracker.Models
         [Display(Name = "Target Weight (kg)")]
         [Range(30, 300, ErrorMessage = "Target weight must be between 30 and 300 kg")]
         public decimal TargetWeight { get; set; }
+        
+        [Display(Name = "Activity Level")]
+        public string ActivityLevel { get; set; }
+        
+        public DateTime DateUpdated { get; set; } = DateTime.Now;
     }
 }
