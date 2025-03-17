@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/scopedcss/projectbundle/FitnessTracker.Web.bundle.scp.css",
+      "PackagePath": "staticwebassets/FitnessTracker.Web.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/wwwroot/lib/bootstrap-icons/font/bootstrap-icons.css",
+      "PackagePath": "staticwebassets/lib/bootstrap-icons/font/bootstrap-icons.css"
+    },
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/wwwroot/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff",
+      "PackagePath": "staticwebassets/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+    },
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/wwwroot/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2",
+      "PackagePath": "staticwebassets/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+    },
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/wwwroot/lib/bootstrap/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/wwwroot/lib/bootstrap/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.FitnessTracker.Web.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.FitnessTracker.Web.props",
+      "PackagePath": "build\\FitnessTracker.Web.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.FitnessTracker.Web.props",
+      "PackagePath": "buildMultiTargeting\\FitnessTracker.Web.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.FitnessTracker.Web.props",
+      "PackagePath": "buildTransitive\\FitnessTracker.Web.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
