@@ -1,10 +1,16 @@
 using System.ComponentModel.DataAnnotations;
-
+using FitnessTracker.Models.Identity;
 namespace FitnessTracker.Models
 {
     public class UserProfile
     {
         public int Id { get; set; }
+
+        // Add this property to link to Identity user
+        public string IdentityUserId { get; set; }
+
+        // This is optional but recommended for easier navigation in code
+        public virtual ApplicationUser IdentityUser { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
         [Display(Name = "First Name")]

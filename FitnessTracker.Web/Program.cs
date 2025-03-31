@@ -5,15 +5,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.HttpLogging;
-
+using Microsoft.AspNetCore.Identity;
 
 using FitnessTracker.DataAccess;
 using FitnessTracker.DataAccess.Interfaces;
 using FitnessTracker.DataAccess.Repositories;
 using FitnessTracker.Business.Services;
 using FitnessTracker.Models;
+using FitnessTracker.Models.Identity; // Make sure this namespace is correct
 using FitnessTracker.Web.Middleware;
-
+using FitnessTracker.Web.Identity; // For CustomPasswordValidator
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +52,7 @@ builder.Services.AddDbContext<FitnessTrackerContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("Development");
 
-  if (builder.Environment.IsStaging())
+    if (builder.Environment.IsStaging())
     {
         connectionString = builder.Configuration.GetConnectionString("Staging");
 
@@ -70,9 +71,28 @@ builder.Services.AddDbContext<FitnessTrackerContext>(options =>
                 errorNumbersToAdd: null);
         }
     );
+});
 
-}
-    );
+// *** ASP.NET Core Identity Configuration ***
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    // Password settings
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    
+    // User settings
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<FitnessTrackerContext>()  // Use your existing context
+.AddDefaultTokenProviders()
+.AddPasswordValidator<CustomPasswordValidator<ApplicationUser>>();
 
 // Repositories (Database)
 builder.Services.AddScoped<IProfileRepository, ProfileDatabaseRepository>();
@@ -107,13 +127,16 @@ else
     app.UseGlobalExceptionHandler();
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-    
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-// app.UseAuthorization();
+
+// Add Authentication and Authorization middleware
+app.UseAuthentication();
+app.UseAuthorization(); 
+
 // Logging configuration
 app.UseHttpLogging();
 
@@ -140,6 +163,9 @@ using (var scope = app.Services.CreateScope())
 
         // // Seed data if database is empty
         // SeedData(context, logger);
+        
+        // Optionally create default roles
+        //CreateRoles(services).Wait();
     }
     catch (Exception ex)
     {
@@ -148,5 +174,26 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
 app.Run();
+
+// Uncomment and implement this method if you want to create default roles
+/*
+private static async Task CreateRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    
+    string[] roleNames = { "Admin", "User", "Trainer" };
+    
+    foreach (var roleName in roleNames)
+    {
+        var roleExists = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExists)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+    
+    // Here you can also create an admin user if needed
+}
+*/

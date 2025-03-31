@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FitnessTracker.Models;
+using FitnessTracker.Models.Identity; // Assuming this is where your ApplicationUser is
 
 namespace FitnessTracker.DataAccess
 {
-    public class FitnessTrackerContext : DbContext
+    public class FitnessTrackerContext : IdentityDbContext<ApplicationUser>
     {
         // Constructor that takes DbContextOptions
         public FitnessTrackerContext(DbContextOptions<FitnessTrackerContext> options)
@@ -24,6 +26,9 @@ namespace FitnessTracker.DataAccess
         // Optional: Configure relationships and constraints
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Call base implementation first to set up Identity tables
+            base.OnModelCreating(modelBuilder);
+
             // Workout to WorkoutExercises relationship
             modelBuilder.Entity<Workout>()
                 .HasMany(w => w.WorkoutExercises)
@@ -41,7 +46,32 @@ namespace FitnessTracker.DataAccess
             modelBuilder.Entity<UserProfile>()
                 .HasKey(p => p.Id);
 
-            base.OnModelCreating(modelBuilder);
+            // add a relationship between ApplicationUser and UserProfile
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne<UserProfile>()
+                .WithOne()
+                .HasForeignKey<UserProfile>(up => up.IdentityUserId);
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+            
+            // You can also customize the Identity tables here if needed
+            // For example, to change table names:
+            /*
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            */
         }
-            }
+    }
 }
