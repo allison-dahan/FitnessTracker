@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Google;
 
 using FitnessTracker.DataAccess;
 using FitnessTracker.DataAccess.Interfaces;
@@ -94,6 +95,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders()
 .AddPasswordValidator<CustomPasswordValidator<ApplicationUser>>();
 
+// Add this in Program.cs where you configure services
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.CallbackPath = "/signin-google";
+    });
+
 // Repositories (Database)
 builder.Services.AddScoped<IProfileRepository, ProfileDatabaseRepository>();
 builder.Services.AddScoped<INutritionRepository, NutritionDatabaseRepository>();
@@ -154,31 +164,152 @@ using (var scope = app.Services.CreateScope())
     var logger = services.GetRequiredService<ILogger<Program>>();
 
     try 
+{
+    var context = services.GetRequiredService<FitnessTrackerContext>();
+    
+    // Create tables first
+    try {
+        context.Database.ExecuteSqlRaw(@"
+            CREATE TABLE IF NOT EXISTS `AspNetRoles` (
+                `Id` varchar(255) NOT NULL,
+                `Name` varchar(256) NULL,
+                `NormalizedName` varchar(256) NULL,
+                `ConcurrencyStamp` longtext NULL,
+                CONSTRAINT `PK_AspNetRoles` PRIMARY KEY (`Id`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetUsers` (
+                `Id` varchar(255) NOT NULL,
+                `FirstName` varchar(50) NULL,
+                `LastName` varchar(50) NULL,
+                `Gender` varchar(10) NULL,
+                `City` varchar(100) NULL,
+                `PostalCode` varchar(20) NULL,
+                `DateOfBirth` datetime(6) NULL,
+                `UserName` varchar(256) NULL,
+                `NormalizedUserName` varchar(256) NULL,
+                `Email` varchar(256) NULL,
+                `NormalizedEmail` varchar(256) NULL,
+                `EmailConfirmed` tinyint(1) NOT NULL,
+                `PasswordHash` longtext NULL,
+                `SecurityStamp` longtext NULL,
+                `ConcurrencyStamp` longtext NULL,
+                `PhoneNumber` longtext NULL,
+                `PhoneNumberConfirmed` tinyint(1) NOT NULL,
+                `TwoFactorEnabled` tinyint(1) NOT NULL,
+                `LockoutEnd` datetime(6) NULL,
+                `LockoutEnabled` tinyint(1) NOT NULL,
+                `AccessFailedCount` int NOT NULL,
+                CONSTRAINT `PK_AspNetUsers` PRIMARY KEY (`Id`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetRoleClaims` (
+                `Id` int NOT NULL AUTO_INCREMENT,
+                `RoleId` varchar(255) NOT NULL,
+                `ClaimType` longtext NULL,
+                `ClaimValue` longtext NULL,
+                CONSTRAINT `PK_AspNetRoleClaims` PRIMARY KEY (`Id`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetUserClaims` (
+                `Id` int NOT NULL AUTO_INCREMENT,
+                `UserId` varchar(255) NOT NULL,
+                `ClaimType` longtext NULL,
+                `ClaimValue` longtext NULL,
+                CONSTRAINT `PK_AspNetUserClaims` PRIMARY KEY (`Id`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetUserLogins` (
+                `LoginProvider` varchar(128) NOT NULL,
+                `ProviderKey` varchar(128) NOT NULL,
+                `ProviderDisplayName` longtext NULL,
+                `UserId` varchar(255) NOT NULL,
+                CONSTRAINT `PK_AspNetUserLogins` PRIMARY KEY (`LoginProvider`, `ProviderKey`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetUserRoles` (
+                `UserId` varchar(255) NOT NULL,
+                `RoleId` varchar(255) NOT NULL,
+                CONSTRAINT `PK_AspNetUserRoles` PRIMARY KEY (`UserId`, `RoleId`)
+            );
+            
+            CREATE TABLE IF NOT EXISTS `AspNetUserTokens` (
+                `UserId` varchar(255) NOT NULL,
+                `LoginProvider` varchar(128) NOT NULL,
+                `Name` varchar(128) NOT NULL,
+                `Value` longtext NULL,
+                CONSTRAINT `PK_AspNetUserTokens` PRIMARY KEY (`UserId`, `LoginProvider`, `Name`)
+            );
+        ");
+    } catch (Exception ex) {
+        logger.LogWarning(ex, "Error creating tables, they might already exist");
+    }
+    
+    // Add foreign keys and indexes in separate try/catch blocks
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetRoleClaims` ADD CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserClaims` ADD CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserLogins` ADD CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserRoles` ADD CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserRoles` ADD CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserTokens` ADD CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
+    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
+    
+    // Create indexes in separate try/catch blocks
+    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetRoleClaims_RoleId` ON `AspNetRoleClaims` (`RoleId`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE UNIQUE INDEX `RoleNameIndex` ON `AspNetRoles` (`NormalizedName`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserClaims_UserId` ON `AspNetUserClaims` (`UserId`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserLogins_UserId` ON `AspNetUserLogins` (`UserId`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserRoles_RoleId` ON `AspNetUserRoles` (`RoleId`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE INDEX `EmailIndex` ON `AspNetUsers` (`NormalizedEmail`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    try { context.Database.ExecuteSqlRaw("CREATE UNIQUE INDEX `UserNameIndex` ON `AspNetUsers` (`NormalizedUserName`);"); } 
+    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
+    
+    logger.LogInformation("Database schema verified");
+    
+    // Now try to create roles
+    try
     {
-        var context = services.GetRequiredService<FitnessTrackerContext>();
-        
-        // Ensure database is created
-        context.Database.EnsureCreated();
-        logger.LogInformation($"Database ensured created in {app.Environment.EnvironmentName} environment.");
+        CreateRoles(services).Wait();
+        logger.LogInformation("Roles created successfully");
+    }
+    catch (Exception roleEx)
+    {
+        logger.LogError(roleEx, "Error creating roles, but continuing application startup");
+    }
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error occurred while initializing the database");
+}
 
-        // // Seed data if database is empty
-        // SeedData(context, logger);
-        
-        // Optionally create default roles
-        //CreateRoles(services).Wait();
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, $"An error occurred while initializing the database in {app.Environment.EnvironmentName} environment.");
-        throw;
-    }
 }
 
 app.Run();
 
-// Uncomment and implement this method if you want to create default roles
-/*
-private static async Task CreateRoles(IServiceProvider serviceProvider)
+
+async Task CreateRoles(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -194,6 +325,25 @@ private static async Task CreateRoles(IServiceProvider serviceProvider)
         }
     }
     
-    // Here you can also create an admin user if needed
+    // Create admin user
+    var adminEmail = "admin@fitnessapp.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            FirstName = "Admin",
+            LastName = "User",
+            EmailConfirmed = true
+        };
+        
+        var result = await userManager.CreateAsync(adminUser, "Admin@123456");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
 }
-*/

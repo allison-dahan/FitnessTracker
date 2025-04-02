@@ -2,10 +2,12 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace FitnessTracker.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

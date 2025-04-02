@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2gFcM/KGPTo=",
+  "dgSpecHash": "fhKP5pDB/VM=",
   "success": true,
   "projectFilePath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/FitnessTracker.Web.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.antiforgery/2.3.0/microsoft.aspnetcore.antiforgery.2.3.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.3.0/microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authentication.core/2.3.0/microsoft.aspnetcore.authentication.core.2.3.0.nupkg.sha512",
+    "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authentication.google/8.0.0/microsoft.aspnetcore.authentication.google.8.0.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authorization/2.3.0/microsoft.aspnetcore.authorization.2.3.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authorization.policy/2.3.0/microsoft.aspnetcore.authorization.policy.2.3.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.cors/2.3.0/microsoft.aspnetcore.cors.2.3.0.nupkg.sha512",

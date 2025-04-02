@@ -1,3 +1,6 @@
 ﻿@using FitnessTracker
 @using FitnessTracker.Models
+@using FitnessTracker.Web.Models
+@using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Identity.SignInManager<FitnessTracker.Models.Identity.ApplicationUser> SignInManager
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

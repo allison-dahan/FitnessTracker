@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Models;
 using FitnessTracker.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 namespace FitnessTracker.Controllers;
 
+[Authorize]
 public class WorkoutsController : Controller
 {
     private readonly IWorkoutRepository _repository;

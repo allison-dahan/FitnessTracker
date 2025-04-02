@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Business.Services;
 using FitnessTracker.Business.DTOs;
 using FitnessTracker.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace FitnessTracker.Web.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IProfileService _profileService;

@@ -1,12 +1,14 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Models;
+using Microsoft.AspNetCore.Authorization; 
 using FitnessTracker.DataAccess.Interfaces; // Repository interfaces
 
 
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IWorkoutRepository _workoutRepository;

@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Models;
-using FitnessTracker.DataAccess.Interfaces; // Repository interfaces
-
+using FitnessTracker.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authorization; 
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class NutritionController : Controller
     {
         private readonly INutritionRepository _nutritionRepository;

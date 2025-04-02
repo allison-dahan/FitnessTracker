@@ -7,6 +7,9 @@
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/FitnessTracker.Web.dll
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/FitnessTracker.Web.pdb
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Humanizer.dll
+/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.Google.dll
+/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.JsonPatch.dll
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/bin/Debug/net8.0/Microsoft.AspNetCore.Razor.Language.dll
@@ -47,6 +50,7 @@
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.csproj.AssemblyReference.cache
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.GeneratedMSBuildEditorConfig.editorconfig
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.csproj.CoreCompileInputs.cache
+/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.MvcApplicationPartsAssemblyInfo.cs
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.MvcApplicationPartsAssemblyInfo.cache
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.RazorAssemblyInfo.cache
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/Debug/net8.0/FitnessTracker.Web.RazorAssemblyInfo.cs
