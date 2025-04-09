@@ -70,12 +70,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUm9sZS9NYW5hZ2VVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Shared/Components/WorkoutStatistics/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0NvbXBvbmVudHMvV29ya291dFN0YXRpc3RpY3MvRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Shared/_RecentWorkouts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19SZWNlbnRXb3Jrb3V0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Spa/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3BhL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/allisondahan/Desktop/c\#/lab4/FitnessTracker/FitnessTracker.Web/Views/Workouts/Create.cshtml]

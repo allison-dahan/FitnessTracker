@@ -139,7 +139,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
@@ -149,6 +149,11 @@ app.UseAuthorization();
 
 // Logging configuration
 app.UseHttpLogging();
+
+app.MapControllerRoute(
+    name: "spa",
+    pattern: "spa/{*catchall}",
+    defaults: new { controller = "Spa", action = "Index" });
 
 app.MapControllerRoute(
     name: "default",
@@ -291,7 +296,7 @@ using (var scope = app.Services.CreateScope())
     // Now try to create roles
     try
     {
-        CreateRoles(services).Wait();
+        await CreateRoles(services);
         logger.LogInformation("Roles created successfully");
     }
     catch (Exception roleEx)

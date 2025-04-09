@@ -8,64 +8,106 @@
         </a>
     </div>
 
+    <!-- Direct View Component Invocation -->
+    <div class="mb-4">
+        <h4>View Component (Server-side Rendering)</h4>
+        <p class="text-muted">This component is rendered server-side when the page loads</p>
+        @await Component.InvokeAsync("WorkoutStatistics")
+    </div>
+
     <!-- Workout Categories -->
     <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Strength Training</h5>
-                    <p class="card-text">Build muscle and increase strength with our curated strength workouts.</p>
-                    <a asp-controller="Workouts" asp-action="ByCategory" asp-route-category="Strength" class="btn btn-outline-primary">View Workouts</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Cardio</h5>
-                    <p class="card-text">Improve your endurance and burn calories with cardio workouts.</p>
-                    <a asp-controller="Workouts" asp-action="ByCategory" asp-route-category="Cardio" class="btn btn-outline-primary">View Workouts</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Flexibility</h5>
-                    <p class="card-text">Enhance your flexibility and mobility with stretching routines.</p>
-                    <a asp-controller="Workouts" asp-action="ByCategory" asp-route-category="Flexibility" class="btn btn-outline-primary">View Workouts</a>
+        <!-- Your existing categories -->
+    </div>
+
+    <!-- AJAX-loaded View Component -->
+    <div class="mb-4">
+        <h4>View Component (AJAX loading)</h4>
+        <p class="text-muted">This component is loaded via AJAX after the page renders</p>
+        <div id="workout-stats-container">
+            <div class="text-center py-3">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading statistics...</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recent Workouts -->
-    <h2 class="mb-4">Recent Workouts</h2>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>Date</th>
-                    <th>Workout Type</th>
-                    <th>Duration</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var workout in Model)
-                {
-                    <tr>
-                        <td>@workout.Date.ToShortDateString()</td>
-                        <td>@workout.Type</td>
-                        <td>@workout.Duration minutes</td>
-                        <td>
-                            <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-primary">View</a>
-                            <a asp-controller="Workouts" asp-action="Edit" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                            <a asp-controller="Workouts" asp-action="Delete" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <!-- Recent Workouts - AJAX-loaded Partial View -->
+    <div class="mb-4">
+        <h4>Partial View (AJAX loading)</h4>
+        <p class="text-muted">This content is loaded via AJAX as a partial view</p>
+        <div id="recent-workouts-container">
+            <div class="text-center py-3">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading workouts...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison of Partial Views vs View Components -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Partial Views vs. View Components</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Partial Views</h5>
+                    <p>Used for the Recent Workouts section above</p>
+                    <ul>
+                        <li><strong>Scope:</strong> Simple, reusable UI fragments</li>
+                        <li><strong>Data:</strong> Shares parent view's model/ViewData</li>
+                        <li><strong>Logic:</strong> Minimal, relies on controller</li>
+                        <li><strong>Use when:</strong> Breaking down complex views</li>
+                    </ul>
+                    <p class="text-muted">In our app, partial views are used for simple, reusable fragments like workout lists that don't need their own business logic.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>View Components</h5>
+                    <p>Used for the Workout Statistics section above</p>
+                    <ul>
+                        <li><strong>Scope:</strong> Self-contained, reusable widgets</li>
+                        <li><strong>Data:</strong> Has its own data retrieval logic</li>
+                        <li><strong>Logic:</strong> Contains business logic (like a mini-controller)</li>
+                        <li><strong>Use when:</strong> UI element needs its own data processing</li>
+                    </ul>
+                    <p class="text-muted">In our app, view components are used for complex widgets that need their own data processing, like calculating statistics.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Load the recent workouts via partial view
+            $.ajax({
+                url: '@Url.Action("GetRecentWorkouts", "Workouts")',
+                type: 'GET',
+                success: function(data) {
+                    $('#recent-workouts-container').html(data);
+                },
+                error: function(xhr, status, error) {
+                    $('#recent-workouts-container').html('<div class="alert alert-danger">Error loading workouts</div>');
+                    console.error("AJAX Error:", error);
+                }
+            });
+            
+            // Load the workout statistics via view component
+            $.ajax({
+                url: '@Url.Action("GetWorkoutStatistics", "Workouts")',
+                type: 'GET',
+                success: function(data) {
+                    $('#workout-stats-container').html(data);
+                },
+                error: function(xhr, status, error) {
+                    $('#workout-stats-container').html('<div class="alert alert-danger">Error loading statistics</div>');
+                    console.error("AJAX Error:", error);
+                }
+            });
+        });
+    </script>
+}

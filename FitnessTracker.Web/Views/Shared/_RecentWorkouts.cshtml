@@ -1,0 +1,30 @@
+@model IEnumerable<FitnessTracker.Models.Workout>
+
+<h2 class="mb-4">Recent Workouts</h2>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Date</th>
+                <th>Workout Type</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var workout in Model)
+            {
+                <tr>
+                    <td>@workout.Date.ToShortDateString()</td>
+                    <td>@workout.Type</td>
+                    <td>@workout.Duration minutes</td>
+                    <td>
+                        <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        <a asp-controller="Workouts" asp-action="Edit" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a asp-controller="Workouts" asp-action="Delete" asp-route-id="@workout.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

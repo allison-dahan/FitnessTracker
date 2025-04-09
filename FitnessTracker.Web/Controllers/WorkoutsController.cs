@@ -20,6 +20,20 @@ public class WorkoutsController : Controller
         return View(workouts);
     }
 
+    [AllowAnonymous]
+    public IActionResult GetRecentWorkouts()
+    {
+        var workouts = _repository.GetAllWorkouts();
+        return PartialView("_RecentWorkouts", workouts);
+    }
+
+    [AllowAnonymous]
+    public IActionResult GetWorkoutStatistics()
+    {
+
+        return ViewComponent("WorkoutStatistics");
+    }
+
     public IActionResult Details(int id)
     {
         var workout = _repository.GetWorkoutById(id);

@@ -1,0 +1,20 @@
+<!-- In Views/Shared/Components/WorkoutStatistics/Default.cshtml -->
+@model FitnessTracker.Web.ViewComponents.WorkoutStatsViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Workout Statistics</h5>
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="display-4">@Model.TotalWorkouts</div>
+                <div>Total Workouts</div>
+            </div>
+            <div class="col-md-4">
+                <div class="display-4">@Model.TotalMinutes</div>
+                <div>Total Minutes</div>
+            </div>
+        </div>
+    </div>
+</div>
