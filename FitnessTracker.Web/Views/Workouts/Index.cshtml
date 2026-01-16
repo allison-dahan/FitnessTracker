@@ -8,72 +8,18 @@
         </a>
     </div>
 
-    <!-- Direct View Component Invocation -->
+    <!-- Workout Statistics -->
     <div class="mb-4">
-        <h4>View Component (Server-side Rendering)</h4>
-        <p class="text-muted">This component is rendered server-side when the page loads</p>
         @await Component.InvokeAsync("WorkoutStatistics")
     </div>
 
-    <!-- Workout Categories -->
-    <div class="row mb-4">
-        <!-- Your existing categories -->
-    </div>
-
-    <!-- AJAX-loaded View Component -->
+    <!-- Recent Workouts -->
     <div class="mb-4">
-        <h4>View Component (AJAX loading)</h4>
-        <p class="text-muted">This component is loaded via AJAX after the page renders</p>
-        <div id="workout-stats-container">
-            <div class="text-center py-3">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading statistics...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Workouts - AJAX-loaded Partial View -->
-    <div class="mb-4">
-        <h4>Partial View (AJAX loading)</h4>
-        <p class="text-muted">This content is loaded via AJAX as a partial view</p>
+        <h3>Recent Workouts</h3>
         <div id="recent-workouts-container">
             <div class="text-center py-3">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading workouts...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Comparison of Partial Views vs View Components -->
-    <div class="card mt-4">
-        <div class="card-header bg-info text-white">
-            <h4 class="mb-0">Partial Views vs. View Components</h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Partial Views</h5>
-                    <p>Used for the Recent Workouts section above</p>
-                    <ul>
-                        <li><strong>Scope:</strong> Simple, reusable UI fragments</li>
-                        <li><strong>Data:</strong> Shares parent view's model/ViewData</li>
-                        <li><strong>Logic:</strong> Minimal, relies on controller</li>
-                        <li><strong>Use when:</strong> Breaking down complex views</li>
-                    </ul>
-                    <p class="text-muted">In our app, partial views are used for simple, reusable fragments like workout lists that don't need their own business logic.</p>
-                </div>
-                <div class="col-md-6">
-                    <h5>View Components</h5>
-                    <p>Used for the Workout Statistics section above</p>
-                    <ul>
-                        <li><strong>Scope:</strong> Self-contained, reusable widgets</li>
-                        <li><strong>Data:</strong> Has its own data retrieval logic</li>
-                        <li><strong>Logic:</strong> Contains business logic (like a mini-controller)</li>
-                        <li><strong>Use when:</strong> UI element needs its own data processing</li>
-                    </ul>
-                    <p class="text-muted">In our app, view components are used for complex widgets that need their own data processing, like calculating statistics.</p>
                 </div>
             </div>
         </div>
@@ -92,19 +38,6 @@
                 },
                 error: function(xhr, status, error) {
                     $('#recent-workouts-container').html('<div class="alert alert-danger">Error loading workouts</div>');
-                    console.error("AJAX Error:", error);
-                }
-            });
-            
-            // Load the workout statistics via view component
-            $.ajax({
-                url: '@Url.Action("GetWorkoutStatistics", "Workouts")',
-                type: 'GET',
-                success: function(data) {
-                    $('#workout-stats-container').html(data);
-                },
-                error: function(xhr, status, error) {
-                    $('#workout-stats-container').html('<div class="alert alert-danger">Error loading statistics</div>');
                     console.error("AJAX Error:", error);
                 }
             });
