@@ -11,6 +11,17 @@ namespace FitnessTracker.Models
         public DailyStatsModel DailyStats {get;  set;}
         public IEnumerable<Workout> RecentWorkouts {get; set;}
         public NutritionSummaryModel NutritionSummary {get; set;}
+        
+        // Chart Data
+        public ChartData WeeklyActivityChart { get; set; }
+        public ChartData WeeklyCaloriesChart { get; set; }
+    }
+
+    public class ChartData
+    {
+        public List<string> Labels { get; set; } = new List<string>();
+        public List<int> Data { get; set; } = new List<int>();
+        public List<int> GoalData {get; set;} // Optional for comparison
     }
 
     public class DailyStatsModel

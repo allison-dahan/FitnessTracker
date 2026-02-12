@@ -2,8 +2,49 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1>Welcome to Fitness Tracker</h1>
-    <p>Track your workouts and fitness progress</p>
-    <a asp-controller="Workouts" asp-action="Index" class="btn btn-primary">View Workouts</a>
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-gradient mb-3">Welcome to Fitness Tracker</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Track your workouts, monitor your nutrition, and achieve your fitness goals with our premium tracking tools.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+            <a asp-controller="Workouts" asp-action="Index" class="btn btn-primary btn-lg px-4 gap-3">Start Tracking</a>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">View Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    <div class="col d-flex align-items-start">
+        <div class="card h-100 p-4 w-100">
+            <div class="card-body">
+                <h2 class="h4 mb-3 text-primary">Workouts</h2>
+                <p class="text-secondary mb-4">Log your daily exercises, track duration, and monitor calories burned over time.</p>
+                <a asp-controller="Workouts" asp-action="Index" class="btn btn-link text-decoration-none p-0">
+                    Go to Workouts <span class="ms-1">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col d-flex align-items-start">
+        <div class="card h-100 p-4 w-100">
+            <div class="card-body">
+                <h2 class="h4 mb-3 text-secondary-color">Nutrition</h2>
+                <p class="text-secondary mb-4">Keep track of your macros and daily calorie intake to stay on top of your diet.</p>
+                <a asp-controller="Nutrition" asp-action="Index" class="btn btn-link text-decoration-none p-0">
+                    Go to Nutrition <span class="ms-1">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col d-flex align-items-start">
+        <div class="card h-100 p-4 w-100">
+            <div class="card-body">
+                <h2 class="h4 mb-3 text-accent-color">Analytics</h2>
+                <p class="text-secondary mb-4">Visualize your progress with detailed charts and weekly summaries.</p>
+                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-link text-decoration-none p-0">
+                    View Analytics <span class="ms-1">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

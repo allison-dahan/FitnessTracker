@@ -196,17 +196,17 @@ public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, 
     }
     
     // If user doesn't have an account, extract info from the external provider and show confirmation form
-    var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-    var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
-    var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+    var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+    var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName) ?? string.Empty;
+    var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname) ?? string.Empty;
     
     // Show the external login confirmation page
     return View("ExternalLoginConfirmation", new ExternalLoginViewModel 
     {
         Email = email,
-        FirstName = firstName ?? string.Empty,
-        LastName = lastName ?? string.Empty,
-        ProviderDisplayName = info.ProviderDisplayName
+        FirstName = firstName,
+        LastName = lastName,
+        ProviderDisplayName = info.ProviderDisplayName ?? "External Provider"
     });
 }
 

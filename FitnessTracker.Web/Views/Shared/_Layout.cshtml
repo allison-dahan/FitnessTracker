@@ -4,15 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Fitness Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <style>
+        /* Failsafe to hide any rogue Profile links */
+        a[href*="Profile"], a[href*="profile"], .nav-link:contains("Profile") {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
-    @if (ViewData["IsVirtualDomRequest"] == null || !(bool)ViewData["IsVirtualDomRequest"])
+    @if (ViewData["IsVirtualDomRequest"] as bool? != true)
     {
         <!-- Full page layout - only render for non-VDOM requests -->
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg fixed-top">
                 <div class="container">
                     <a class="navbar-brand" asp-controller="Home" asp-action="Index">FitTrack</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -21,63 +30,42 @@
 
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
+
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard" ? "active" : "")" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Workouts" ? "active" : "")" asp-controller="Workouts" asp-action="Index">Workouts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Workouts" ? "active" : "")" asp-controller="Workouts" asp-action="Index">Workouts</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Nutrition" ? "active" : "")" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Nutrition" ? "active" : "")" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "active" : "")" asp-controller="Profile" asp-action="Index">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Spa" ? "active" : "")" asp-controller="Spa" asp-action="Index">SPA Version</a>
-                            </li>
-                        </ul>
-                        
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @if (User.IsInRole("Admin"))
+
+                            @if (User.Identity?.IsAuthenticated == true)
                             {
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Role" asp-action="Index">Manage Roles</a>
+                                    </li>
+                                }
+
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Role" asp-action="Index">Manage Roles</a>
-                                </li>
-                                <li class="nav-item">
-                                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="form-inline">
-                                        <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
+                                    <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                        <button type="submit" class="nav-link btn btn-link" style="cursor: pointer;">Logout</button>
                                     </form>
                                 </li>
                             }
-                            <li class="nav-item">
-                                <span class="nav-link text-dark">Hello @User.Identity.Name!</span>
-                            </li>
-                            <li class="nav-item">
-                                <form class="form-inline" asp-controller="Account" asp-action="Logout">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="form-inline">
-                                    <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        }
-                    </div>
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
+                            }
+                        </ul>
                 </div>
             </nav>
         </header>
@@ -89,10 +77,10 @@
         </main>
     </div>
     
-    @if (ViewData["IsVirtualDomRequest"] == null || !(bool)ViewData["IsVirtualDomRequest"])
+    @if (ViewData["IsVirtualDomRequest"] as bool? != true)
     {
         <!-- Only include footer for non-VDOM requests -->
-        <footer class="bg-dark text-white text-center py-3 mt-5">
+        <footer class="text-center py-3 mt-5">
             <div class="container">
                 <p class="mb-0">&copy; 2025 FitTrack. All rights reserved.</p>
             </div>
@@ -103,11 +91,7 @@
         <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         
-        @if (ViewContext.RouteData.Values["Controller"].ToString() == "Spa")
-        {
-            <!-- Only load the SPA script when on the SPA page -->
-            <script src="~/js/fitness-spa-jquery.js" asp-append-version="true"></script>
-        }
+
     }
     
     @await RenderSectionAsync("Scripts", required: false)

@@ -1,0 +1,14 @@
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/FitnessTracker.Models.deps.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/FitnessTracker.Models.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.DependencyInjection.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Identity.Core.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Identity.Stores.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Logging.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Options.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Release/net8.0/publish/Microsoft.Extensions.Primitives.dll

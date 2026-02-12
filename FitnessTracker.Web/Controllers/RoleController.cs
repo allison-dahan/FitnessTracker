@@ -160,16 +160,19 @@ namespace FitnessTracker.Web.Controllers
 
             for (int i = 0; i < model.Count; i++)
             {
-                var user = await _userManager.FindByIdAsync(model[i].UserId);
-                if (user != null)
+                if (!string.IsNullOrEmpty(model[i].UserId))
                 {
-                    if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                    var user = await _userManager.FindByIdAsync(model[i].UserId);
+                    if (user != null && !string.IsNullOrEmpty(role.Name))
                     {
-                        await _userManager.AddToRoleAsync(user, role.Name);
-                    }
-                    else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
-                    {
-                        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                        {
+                            await _userManager.AddToRoleAsync(user, role.Name);
+                        }
+                        else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
+                        {
+                            await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        }
                     }
                 }
             }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HlQfR+Nv29U=",
+  "dgSpecHash": "ETRd0zwGISA=",
   "success": true,
-  "projectFilePath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj",
+  "projectFilePath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj",
   "expectedPackageFiles": [
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.antiforgery/2.3.0/microsoft.aspnetcore.antiforgery.2.3.0.nupkg.sha512",
     "/Users/allisondahan/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.3.0/microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",

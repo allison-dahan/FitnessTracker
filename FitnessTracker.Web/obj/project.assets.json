@@ -8475,11 +8475,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/FitnessTracker.Web.csproj",
+      "projectUniqueName": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Web/FitnessTracker.Web.csproj",
       "projectName": "FitnessTracker.Web",
-      "projectPath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/FitnessTracker.Web.csproj",
+      "projectPath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Web/FitnessTracker.Web.csproj",
       "packagesPath": "/Users/allisondahan/.nuget/packages/",
-      "outputPath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Web/obj/",
+      "outputPath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Web/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/allisondahan/.nuget/NuGet/NuGet.Config"
@@ -8494,14 +8494,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj": {
-              "projectPath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj"
+            "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj": {
+              "projectPath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/FitnessTracker.Business.csproj"
             },
-            "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.DataAccess/FitnessTracker.DataAccess.csproj": {
-              "projectPath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.DataAccess/FitnessTracker.DataAccess.csproj"
+            "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/FitnessTracker.DataAccess.csproj": {
+              "projectPath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/FitnessTracker.DataAccess.csproj"
             },
-            "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Models/FitnessTracker.Models.csproj": {
-              "projectPath": "/Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Models/FitnessTracker.Models.csproj"
+            "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/FitnessTracker.Models.csproj": {
+              "projectPath": "/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/FitnessTracker.Models.csproj"
             }
           }
         }

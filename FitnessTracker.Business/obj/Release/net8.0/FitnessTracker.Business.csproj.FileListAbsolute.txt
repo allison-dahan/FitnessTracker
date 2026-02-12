@@ -1,0 +1,16 @@
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.Business.deps.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.Business.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.Business.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.DataAccess.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.DataAccess.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/bin/Release/net8.0/FitnessTracker.Models.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.csproj.AssemblyReference.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.GeneratedMSBuildEditorConfig.editorconfig
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.csproj.CoreCompileInputs.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.sourcelink.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessT.DE527514.Up2Date
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/refint/FitnessTracker.Business.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/FitnessTracker.Business.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Business/obj/Release/net8.0/ref/FitnessTracker.Business.dll

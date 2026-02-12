@@ -183,8 +183,8 @@ namespace FitnessTracker.Controllers
     // View Model to combine nutrition data for the view
     public class NutritionViewModel
     {
-        public NutritionSummaryModel Summary { get; set; }
-        public IEnumerable<MealModel> Meals { get; set; }
+        public NutritionSummaryModel Summary { get; set; } = new NutritionSummaryModel();
+        public IEnumerable<MealModel> Meals { get; set; } = new List<MealModel>();
         public DateTime SelectedDate { get; set; } = DateTime.Now.Date;
         public WaterIntakeModel NewWaterIntake { get; set; } = new WaterIntakeModel();
     }

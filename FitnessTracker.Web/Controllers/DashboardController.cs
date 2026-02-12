@@ -26,12 +26,34 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Index() 
         {
+            var weeklyStats = _statsRepository.GetWeeklyStats().ToList();
+            
             var dashboardViewModel = new DashboardViewModel
             {
                 DailyStats = _statsRepository.GetDailyStats(),
                 RecentWorkouts = _workoutRepository.GetRecentWorkouts(2),
-                NutritionSummary = _nutritionRepository.GetTodaysSummary()
-
+                NutritionSummary = _nutritionRepository.GetTodaysSummary(),
+                
+                WeeklyActivityChart = new ChartData 
+                {
+                    Labels = weeklyStats.Any(ws => ws.WorkoutCount > 0) 
+                        ? weeklyStats.Select(ws => ws.Day).ToList()
+                        : new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" },
+                    Data = weeklyStats.Any(ws => ws.WorkoutCount > 0)
+                        ? weeklyStats.Select(ws => ws.WorkoutCount).ToList()
+                        : new List<int> { 1, 0, 2, 1, 3, 0, 2 } // Mock data
+                },
+                
+                WeeklyCaloriesChart = new ChartData
+                {
+                    Labels = weeklyStats.Any(ws => ws.Calories > 0)
+                        ? weeklyStats.Select(ws => ws.Day).ToList()
+                        : new List<string> { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" },
+                    Data = weeklyStats.Any(ws => ws.Calories > 0)
+                        ? weeklyStats.Select(ws => ws.Calories).ToList()
+                        : new List<int> { 1800, 2100, 1950, 2200, 1850, 2300, 2000 }, // Mock data
+                    GoalData = Enumerable.Repeat(2000, 7).ToList()
+                }
             };
 
             return View(dashboardViewModel);

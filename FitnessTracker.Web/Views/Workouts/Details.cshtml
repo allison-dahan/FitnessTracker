@@ -1,5 +1,10 @@
 @{
     var workout = ViewData["Workout"] as Workout;
+    if (workout == null)
+    {
+        <div class="alert alert-danger">Workout found.</div>
+        return;
+    }
 }
 @using FitnessTracker.Models;
 

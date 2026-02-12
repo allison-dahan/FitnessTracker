@@ -9,3 +9,14 @@
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/refint/FitnessTracker.Models.dll
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.pdb
 /Users/allisondahan/Desktop/c#/lab4/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/ref/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Debug/net8.0/FitnessTracker.Models.deps.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Debug/net8.0/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/bin/Debug/net8.0/FitnessTracker.Models.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.csproj.AssemblyReference.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.csproj.CoreCompileInputs.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.sourcelink.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/refint/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/FitnessTracker.Models.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.Models/obj/Debug/net8.0/ref/FitnessTracker.Models.dll

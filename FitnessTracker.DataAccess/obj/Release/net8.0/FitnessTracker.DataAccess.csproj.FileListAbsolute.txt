@@ -1,0 +1,16 @@
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.DataAccess.deps.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.DataAccess.runtimeconfig.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.DataAccess.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.DataAccess.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.Models.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/bin/Release/net8.0/FitnessTracker.Models.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.csproj.AssemblyReference.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.csproj.CoreCompileInputs.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.sourcelink.json
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessT.7995757D.Up2Date
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/refint/FitnessTracker.DataAccess.dll
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.pdb
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/FitnessTracker.DataAccess.genruntimeconfig.cache
+/Users/allisondahan/Desktop/dev/FitnessTracker/FitnessTracker.DataAccess/obj/Release/net8.0/ref/FitnessTracker.DataAccess.dll

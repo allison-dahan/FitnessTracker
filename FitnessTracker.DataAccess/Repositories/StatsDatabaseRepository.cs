@@ -36,18 +36,33 @@ namespace FitnessTracker.DataAccess.Repositories
 
         public IEnumerable<WeeklyStatsModel> GetWeeklyStats()
         {
-            // This would typically be more complex with actual database queries
-            var startOfWeek = DateTime.Now.AddDays(-7);
-            return _context.Meals
-                .Where(m => m.Date >= startOfWeek)
-                .GroupBy(m => m.Date.DayOfWeek)
-                .Select(g => new WeeklyStatsModel
-                {
-                    Day = g.Key.ToString(),
-                    Calories = g.Sum(m => m.Calories),
-                    Steps = 7500 // Placeholder - would need actual steps tracking
-                })
+            var endRes = DateTime.Now.Date;
+            var startRes = endRes.AddDays(-6);
+
+            // Fetch data from DB
+            var meals = _context.Meals
+                .Where(m => m.Date >= startRes && m.Date <= endRes.AddDays(1).AddTicks(-1))
                 .ToList();
+                
+            var workouts = _context.Workouts
+                .Where(w => w.Date >= startRes && w.Date <= endRes.AddDays(1).AddTicks(-1))
+                .ToList();
+
+            var stats = new List<WeeklyStatsModel>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                var date = startRes.AddDays(i);
+                stats.Add(new WeeklyStatsModel
+                {
+                    Day = date.DayOfWeek.ToString(),
+                    Calories = meals.Where(m => m.Date.Date == date).Sum(m => m.Calories),
+                    WorkoutCount = workouts.Count(w => w.Date.Date == date),
+                    Steps = 7500 // Placeholder
+                });
+            }
+
+            return stats;
         }
 
         public UserGoalsModel GetUserGoals()

@@ -23,22 +23,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();
 
 // Set minimum log levels based on environment
-if (builder.Environment.IsDevelopment())
-{
-    builder.Logging.SetMinimumLevel(LogLevel.Debug);
-}
-else if (builder.Environment.IsStaging())
-{
-    builder.Logging.SetMinimumLevel(LogLevel.Warning);
-}
-else // Production
-{
-    builder.Logging.SetMinimumLevel(LogLevel.Error);
-}
+// Set log level
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
@@ -51,16 +41,9 @@ builder.Logging.AddDebug();
 // Database Context
 builder.Services.AddDbContext<FitnessTrackerContext>(options =>
 {
-    string connectionString = builder.Configuration.GetConnectionString("Development");
-
-    if (builder.Environment.IsStaging())
-    {
-        connectionString = builder.Configuration.GetConnectionString("Staging");
-
-    } else if (builder.Environment.IsProduction())
-    {
-        connectionString = builder.Configuration.GetConnectionString("Production");
-    }
+    // Use a single connection string for all environments
+    string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+                              ?? builder.Configuration.GetConnectionString("Development");
     options.UseMySql(
         connectionString,
         new MySqlServerVersion(new Version(8, 0, 21)),
@@ -172,126 +155,12 @@ using (var scope = app.Services.CreateScope())
 {
     var context = services.GetRequiredService<FitnessTrackerContext>();
     
-    // Create tables first
-    try {
-        context.Database.ExecuteSqlRaw(@"
-            CREATE TABLE IF NOT EXISTS `AspNetRoles` (
-                `Id` varchar(255) NOT NULL,
-                `Name` varchar(256) NULL,
-                `NormalizedName` varchar(256) NULL,
-                `ConcurrencyStamp` longtext NULL,
-                CONSTRAINT `PK_AspNetRoles` PRIMARY KEY (`Id`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetUsers` (
-                `Id` varchar(255) NOT NULL,
-                `FirstName` varchar(50) NULL,
-                `LastName` varchar(50) NULL,
-                `Gender` varchar(10) NULL,
-                `City` varchar(100) NULL,
-                `PostalCode` varchar(20) NULL,
-                `DateOfBirth` datetime(6) NULL,
-                `UserName` varchar(256) NULL,
-                `NormalizedUserName` varchar(256) NULL,
-                `Email` varchar(256) NULL,
-                `NormalizedEmail` varchar(256) NULL,
-                `EmailConfirmed` tinyint(1) NOT NULL,
-                `PasswordHash` longtext NULL,
-                `SecurityStamp` longtext NULL,
-                `ConcurrencyStamp` longtext NULL,
-                `PhoneNumber` longtext NULL,
-                `PhoneNumberConfirmed` tinyint(1) NOT NULL,
-                `TwoFactorEnabled` tinyint(1) NOT NULL,
-                `LockoutEnd` datetime(6) NULL,
-                `LockoutEnabled` tinyint(1) NOT NULL,
-                `AccessFailedCount` int NOT NULL,
-                CONSTRAINT `PK_AspNetUsers` PRIMARY KEY (`Id`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetRoleClaims` (
-                `Id` int NOT NULL AUTO_INCREMENT,
-                `RoleId` varchar(255) NOT NULL,
-                `ClaimType` longtext NULL,
-                `ClaimValue` longtext NULL,
-                CONSTRAINT `PK_AspNetRoleClaims` PRIMARY KEY (`Id`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetUserClaims` (
-                `Id` int NOT NULL AUTO_INCREMENT,
-                `UserId` varchar(255) NOT NULL,
-                `ClaimType` longtext NULL,
-                `ClaimValue` longtext NULL,
-                CONSTRAINT `PK_AspNetUserClaims` PRIMARY KEY (`Id`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetUserLogins` (
-                `LoginProvider` varchar(128) NOT NULL,
-                `ProviderKey` varchar(128) NOT NULL,
-                `ProviderDisplayName` longtext NULL,
-                `UserId` varchar(255) NOT NULL,
-                CONSTRAINT `PK_AspNetUserLogins` PRIMARY KEY (`LoginProvider`, `ProviderKey`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetUserRoles` (
-                `UserId` varchar(255) NOT NULL,
-                `RoleId` varchar(255) NOT NULL,
-                CONSTRAINT `PK_AspNetUserRoles` PRIMARY KEY (`UserId`, `RoleId`)
-            );
-            
-            CREATE TABLE IF NOT EXISTS `AspNetUserTokens` (
-                `UserId` varchar(255) NOT NULL,
-                `LoginProvider` varchar(128) NOT NULL,
-                `Name` varchar(128) NOT NULL,
-                `Value` longtext NULL,
-                CONSTRAINT `PK_AspNetUserTokens` PRIMARY KEY (`UserId`, `LoginProvider`, `Name`)
-            );
-        ");
-    } catch (Exception ex) {
-        logger.LogWarning(ex, "Error creating tables, they might already exist");
-    }
-    
-    // Add foreign keys and indexes in separate try/catch blocks
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetRoleClaims` ADD CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserClaims` ADD CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserLogins` ADD CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserRoles` ADD CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserRoles` ADD CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("ALTER TABLE `AspNetUserTokens` ADD CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE;"); } 
-    catch (Exception ex) { logger.LogInformation("Foreign key already exists: " + ex.Message); }
-    
-    // Create indexes in separate try/catch blocks
-    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetRoleClaims_RoleId` ON `AspNetRoleClaims` (`RoleId`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE UNIQUE INDEX `RoleNameIndex` ON `AspNetRoles` (`NormalizedName`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserClaims_UserId` ON `AspNetUserClaims` (`UserId`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserLogins_UserId` ON `AspNetUserLogins` (`UserId`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE INDEX `IX_AspNetUserRoles_RoleId` ON `AspNetUserRoles` (`RoleId`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE INDEX `EmailIndex` ON `AspNetUsers` (`NormalizedEmail`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    try { context.Database.ExecuteSqlRaw("CREATE UNIQUE INDEX `UserNameIndex` ON `AspNetUsers` (`NormalizedUserName`);"); } 
-    catch (Exception ex) { logger.LogInformation("Index already exists: " + ex.Message); }
-    
-    logger.LogInformation("Database schema verified");
+    // Create database and tables using EF Core
+    // This handles creation if not exists, and ignores if exists.
+    // It's much safer than the manual SQL script.
+    context.Database.EnsureCreated();
+
+    logger.LogInformation("Database schema verified via EnsureCreated");
     
     // Now try to create roles
     try
@@ -302,6 +171,16 @@ using (var scope = app.Services.CreateScope())
     catch (Exception roleEx)
     {
         logger.LogError(roleEx, "Error creating roles, but continuing application startup");
+    }
+    // Seed real data for charts
+    try
+    {
+        await SeedData(services);
+        logger.LogInformation("Data seeded successfully");
+    }
+    catch (Exception seedEx)
+    {
+        logger.LogError(seedEx, "Error seeding data");
     }
 }
 catch (Exception ex)
@@ -350,5 +229,49 @@ async Task CreateRoles(IServiceProvider serviceProvider)
         {
             await userManager.AddToRoleAsync(adminUser, "Admin");
         }
+    }
+}
+
+async Task SeedData(IServiceProvider serviceProvider)
+{
+    var context = serviceProvider.GetRequiredService<FitnessTrackerContext>();
+    
+    // 1. Seed Workouts if none exist
+    if (!context.Workouts.Any())
+    {
+        var today = DateTime.Now;
+        var workouts = new List<Workout>
+        {
+            new Workout { Date = today.AddDays(-6), Type = "Running", Duration = 30, Notes = "Morning jog, approx 300 kcal" },
+            new Workout { Date = today.AddDays(-5), Type = "Weightlifting", Duration = 45, Notes = "Upper body, approx 250 kcal" },
+            new Workout { Date = today.AddDays(-4), Type = "Yoga", Duration = 60, Notes = "Relaxing flow, approx 200 kcal" },
+            new Workout { Date = today.AddDays(-2), Type = "HIIT", Duration = 25, Notes = "Quick session, approx 350 kcal" },
+            new Workout { Date = today.AddDays(-1), Type = "Swimming", Duration = 40, Notes = "Laps, approx 400 kcal" },
+            new Workout { Date = today, Type = "Cycling", Duration = 50, Notes = "Evening ride, approx 450 kcal" }
+        };
+        
+        context.Workouts.AddRange(workouts);
+        await context.SaveChangesAsync();
+    }
+
+    // 2. Seed Meals if none exist (for the last week)
+    if (!context.Meals.Any())
+    {
+        var today = DateTime.Now;
+        var meals = new List<MealModel>();
+
+        for(int i = 6; i >= 0; i--)
+        {
+            var date = today.AddDays(-i);
+            // Breakfast
+            meals.Add(new MealModel { Date = date, MealType = "Breakfast", Calories = 350, Protein = 12, Carbs = 60, Fat = 6, Notes = "Oatmeal" });
+            // Lunch
+            meals.Add(new MealModel { Date = date, MealType = "Lunch", Calories = 450, Protein = 40, Carbs = 10, Fat = 20, Notes = "Chicken Salad" });
+            // Dinner
+            meals.Add(new MealModel { Date = date, MealType = "Dinner", Calories = 600, Protein = 35, Carbs = 50, Fat = 25, Notes = "Salmon & Rice" });
+        }
+        
+        context.Meals.AddRange(meals);
+        await context.SaveChangesAsync();
     }
 }

@@ -6,62 +6,92 @@
     <!-- Summary Cards -->
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="card bg-primary text-white">
+            <div class="card h-100 border-start border-4 border-primary">
                 <div class="card-body">
-                    <h5 class="card-title">Today's Calories</h5>
-                    <h2 class="card-text">@Model.DailyStats.CaloriesConsumed</h2>
-                    <p class="mb-0">Goal: @Model.DailyStats.CaloriesGoal</p>
+                    <h5 class="card-title text-muted text-uppercase fs-6">Today's Calories</h5>
+                    <div class="d-flex align-items-baseline">
+                        <h2 class="card-text fw-bold text-primary mb-0">@Model.DailyStats.CaloriesConsumed</h2>
+                        <span class="ms-2 text-muted">/ @Model.DailyStats.CaloriesGoal</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white">
+            <div class="card h-100 border-start border-4 border-success">
                 <div class="card-body">
-                    <h5 class="card-title">Workouts This Week</h5>
-                    <h2 class="card-text">@Model.DailyStats.WorkoutsThisWeek</h2>
-                    <p class="mb-0">Goal: @Model.DailyStats.WorkoutsGoal</p>
+                    <h5 class="card-title text-muted text-uppercase fs-6">Workouts</h5>
+                    <div class="d-flex align-items-baseline">
+                        <h2 class="card-text fw-bold text-success mb-0">@Model.DailyStats.WorkoutsThisWeek</h2>
+                        <span class="ms-2 text-muted">/ @Model.DailyStats.WorkoutsGoal</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card bg-info text-white">
+            <div class="card h-100 border-start border-4 border-info">
                 <div class="card-body">
-                    <h5 class="card-title">Water Intake</h5>
-                    <h2 class="card-text">@Model.DailyStats.WaterIntake.ToString("0.0")L</h2>
-                    <p class="mb-0">Goal: @Model.DailyStats.WaterGoal.ToString("0.0")L</p>
+                    <h5 class="card-title text-muted text-uppercase fs-6">Water Intake</h5>
+                    <div class="d-flex align-items-baseline">
+                        <h2 class="card-text fw-bold text-info mb-0">@Model.DailyStats.WaterIntake.ToString("0.0")L</h2>
+                        <span class="ms-2 text-muted">/ @Model.DailyStats.WaterGoal.ToString("0.0")L</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card bg-warning text-white">
+            <div class="card h-100 border-start border-4 border-warning">
                 <div class="card-body">
-                    <h5 class="card-title">Steps Today</h5>
-                    <h2 class="card-text">@Model.DailyStats.StepsToday.ToString("N0")</h2>
-                    <p class="mb-0">Goal: @Model.DailyStats.StepsGoal.ToString("N0")</p>
+                    <h5 class="card-title text-muted text-uppercase fs-6">Steps Today</h5>
+                    <div class="d-flex align-items-baseline">
+                        <h2 class="card-text fw-bold text-warning mb-0">@Model.DailyStats.StepsToday.ToString("N0")</h2>
+                        <span class="ms-2 text-muted">/ @Model.DailyStats.StepsGoal.ToString("N0")</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recent Activity -->
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-md-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Weekly Activity</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="weeklyActivityChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Macronutrients</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="macroChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity & Nutrition -->
     <div class="row">
         <div class="col-md-6 mb-4">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header">
                     <h5 class="mb-0">Recent Workouts</h5>
                 </div>
                 <div class="card-body">
-                    <div class="list-group">
+                    <div class="list-group list-group-flush">
                         @foreach (var workout in Model.RecentWorkouts)
                         {
-                            <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">@workout.Type</h6>
-                                    <small>@workout.Date.ToShortDateString()</small>
+                            <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">@workout.Type</h6>
+                                    <small class="text-muted">@workout.Date.ToShortDateString()</small>
                                 </div>
-                                <p class="mb-1">@workout.Duration minutes 
-                                    @* · @workout.CaloriesBurned calories *@
-                                    </p>
+                                <span class="badge bg-primary rounded-pill">@workout.Duration min</span>
                             </a>
                         }
                     </div>
@@ -69,33 +99,37 @@
             </div>
         </div>
         <div class="col-md-6 mb-4">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header">
                     <h5 class="mb-0">Nutrition Summary</h5>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Protein</label>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" style="width: @(Model.NutritionSummary.ProteinGrams * 100 / Model.NutritionSummary.ProteinGoal)%">
-                                @Model.NutritionSummary.ProteinGrams / @Model.NutritionSummary.ProteinGoal g
-                            </div>
+                    @* Reusing existing progress bars but cleaner *@
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="fw-bold">Protein</span>
+                            <span class="text-muted">@Model.NutritionSummary.ProteinGrams / @Model.NutritionSummary.ProteinGoal g</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: @(Model.NutritionSummary.ProteinGrams * 100 / Math.Max(1, Model.NutritionSummary.ProteinGoal))%"></div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Carbs</label>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" style="width: @(Model.NutritionSummary.CarbsGrams * 100 / Model.NutritionSummary.CarbsGoal)%">
-                                @Model.NutritionSummary.CarbsGrams / @Model.NutritionSummary.CarbsGoal g
-                            </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="fw-bold">Carbs</span>
+                            <span class="text-muted">@Model.NutritionSummary.CarbsGrams / @Model.NutritionSummary.CarbsGoal g</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-info" style="width: @(Model.NutritionSummary.CarbsGrams * 100 / Math.Max(1, Model.NutritionSummary.CarbsGoal))%"></div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Fats</label>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" style="width: @(Model.NutritionSummary.FatGrams * 100 / Model.NutritionSummary.FatGoal)%">
-                                @Model.NutritionSummary.FatGrams / @Model.NutritionSummary.FatGoal g
-                            </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="fw-bold">Fats</span>
+                            <span class="text-muted">@Model.NutritionSummary.FatGrams / @Model.NutritionSummary.FatGoal g</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: @(Model.NutritionSummary.FatGrams * 100 / Math.Max(1, Model.NutritionSummary.FatGoal))%"></div>
                         </div>
                     </div>
                 </div>
@@ -103,3 +137,63 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Weekly Activity Chart (Bar)
+        const ctxActivity = document.getElementById('weeklyActivityChart').getContext('2d');
+        new Chart(ctxActivity, {
+            type: 'bar',
+            data: {
+                labels: @Json.Serialize(Model.WeeklyActivityChart?.Labels ?? new List<string>()),
+                datasets: [{
+                    label: 'Workouts',
+                    data: @Json.Serialize(Model.WeeklyActivityChart?.Data ?? new List<int>()),
+                    backgroundColor: '#4361ee',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Macro Distribution (Doughnut)
+        const ctxMacro = document.getElementById('macroChart').getContext('2d');
+        new Chart(ctxMacro, {
+            type: 'doughnut',
+            data: {
+                labels: ['Protein', 'Carbs', 'Fats'],
+                datasets: [{
+                    data: [
+                        @Model.NutritionSummary.ProteinGrams,
+                        @Model.NutritionSummary.CarbsGrams, 
+                        @Model.NutritionSummary.FatGrams
+                    ],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+}
